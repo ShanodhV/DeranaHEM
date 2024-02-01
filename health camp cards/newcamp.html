@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <title>Create New Health Camp</title>
+</head>
+<body>
+  <div class="dashboard-header">
+    <div class="logo-and-search">
+        <img class="organization-logo" src="images/HEMlogo.png" alt="Organization Logo">
+        <h4>ManusathDeranaHEM</h4>
+        <div class="search-bar">
+          <input type="text" placeholder="Search...">
+          <i class="fas fa-search"></i>
+        </div>
+      </div>
+      <div class="user-info">
+        <img class="user-avatar" src="images/user.png" alt="User Avatar">
+        <span class="user-name">Admin</span>
+        <i class="fas fa-bell"></i>
+      </div>
+  </div>
+
+  <div class="dashboard-main">
+    <div class="sidebar">
+        <hr><div class="menu-heading">Main</div><hr>
+        <ul>
+          <a href="/dashboard.html"><li><i class="fas fa-tachometer-alt"></i> Dashboard</li></a>
+          <a href="#"><li class="selected"><i class="fas fa-hospital"></i> Health Camp</li></a>
+          <a href="#"><li><i class="fas fa-leaf"></i> Sipsal Pubuduwa</li></a>
+          <a href="#"><li><i class="fas fa-child"></i> Derana Daruwo</li></a>
+          <a href="#"><li><i class="fas fa-users"></i> Volunteer Management</li></a>
+        </ul>
+        <hr>
+        <div class="menu-heading">Others</div>
+        <hr>
+        <ul>
+          <a href="#"><li><i class="fas fa-cogs"></i> Settings</li></a>
+          <a href="#"><li><i class="fas fa-user"></i> Account</li></a>
+          <a href="#"><li><i class="fas fa-ellipsis-h"></i> Other</li></a>
+        </ul>
+    </div>
+    <div class="form-container">
+        <div class="create-health-camp">
+            <h2>Create New Health Camp</h2>
+            <form action="#" method="POST" class="health-camp-form">
+              <div class="form-group">
+                <label for="camp-id">Camp ID:</label>
+                <input type="text" id="camp-id" name="camp-id">
+              </div>
+              <div class="p-tex">location</div>
+              <div class="ver">
+                  <div class="form-group">
+                      <label for="provinces">Province:</label>
+                      <select id="province" name="province">
+                        <!-- Options for provinces -->
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="district">District:</label>
+                      <select id="district" name="district">
+                        <!-- Options for districts -->
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="town">Town:</label>
+                      <select id="town" name="town">
+                        <!-- Options for towns -->
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="moh">MOH:</label>
+                      <select id="moh" name="moh">
+                        <!-- Options for MOH -->
+                      </select>
+                    </div>
+                    <div><button type="button" id="add-moh">Add Another MOH</button></div>
+              </div>
+              <div class="form-group">
+                <label for="location-name">Location Name:</label>
+                <input type="text" id="location-name" name="location-name">
+              </div>
+              <div class="form-group">
+                <label for="contact-person">Camp Contact Person:</label>
+                <div id="contact-persons">
+                  <!-- Fields for the first contact person -->
+                  <div class="contact-person">
+                    <input type="text" name="contact-name[]" placeholder="Name">
+                    <input type="tel" name="contact-number[]" id="contact-number" placeholder="Mobile Number" oninput="validatePhoneNumber(this)">
+                    <div id="phone-error" style="color: red;"></div>
+
+                  </div>
+                </div>
+                <button type="button" id="add-contact">Add Another Contact Person</button>
+              </div>
+              
+              <div class="form-group">
+                <label for="camp-activities">Camp Activities:</label>
+                <select id="camp-activities" name="camp-activities">
+                  <!-- Options for camp activities -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="sponsor">Sponsor/Collaborator:</label>
+                <select id="sponsor" name="sponsor">
+                  <!-- Options for sponsors/collaborators -->
+                </select>
+                <button type="button" id="add-sponsor">Add New Sponsor/Collaborator</button>
+              </div>
+              <!-- Popup for Adding New Sponsor/Collaborator -->
+                <div class="popup" id="popup">
+                    <button class="close-btn" id="close-popup">&times;</button>
+                    <h2>Add New Sponsor/Collaborator</h2>
+                    <input type="text" id="sponsor-name" placeholder="Sponsor/Collaborator Name">
+                    <input type="text" id="admin-user" placeholder="Admin Username">
+                    <input type="password" id="admin-password" placeholder="Admin Password">
+                    <button id="submit-sponsor">Add Sponsor/Collaborator</button>
+                </div>   
+              <button type="submit">Create Health Camp</button>
+            </form>
+          </div>
+        </div>
+    </div>
+
+
+
+  <!-- <div class="dashboard-footer">
+    <p>ManusathDernaHEM<br>Designed And Developed By : NoobCupid | ©NoobCupid2024</p>
+  </div> -->
+
+  <script>
+    // JavaScript for adding another MOH
+    document.addEventListener('DOMContentLoaded', function() {
+      const addMOHButton = document.getElementById('add-moh');
+      const mohSelect = document.getElementById('moh');
+
+      addMOHButton.addEventListener('click', function() {
+        const newMOHOption = document.createElement('option');
+        newMOHOption.text = 'New MOH';
+        mohSelect.add(newMOHOption);
+      });
+    });
+
+    //provinces and districts
+    const provincesData = [
+  { id: 1, name: "Western Province" },
+  { id: 2, name: "Central Province" },
+  { id: 3, name: "Southern Province" },
+  { id: 4, name: "Northern Province" },
+  { id: 5, name: "Eastern Province" },
+  { id: 6, name: "North Western Province" },
+  { id: 7, name: "North Central Province" },
+  { id: 8, name: "Uva Province" },
+  { id: 9, name: "Sabaragamuwa Province" }
+  
+];
+
+const districtsData = {
+  1: [
+    { id: 1, name: "Colombo" },
+    { id: 2, name: "Gampaha" },
+    { id: 3, name: "Kalutara" }
+    
+  ],
+  2: [
+    { id: 1, name: "Kandy" },
+    { id: 2, name: "Nuwara Eliya" },
+    { id: 3, name: "Matale" }
+    
+  ],
+  3: [
+    { id: 1, name: "Galle" },
+    { id: 2, name: "Matara" },
+    { id: 3, name: "Hambantota" }
+    
+  ],
+  
+  4: [
+    { id: 1, name: "Jaffna" },
+    { id: 2, name: "Kilinochchi" },
+    { id: 3, name: "Mannar" },
+    { id: 4, name: "Mullaitivu" },
+    { id: 5, name: "Vavuniya" }
+   
+  ],
+  5: [
+    { id: 1, name: "Trincomalee" },
+    { id: 2, name: "Batticaloa" },
+    { id: 3, name: "Ampara" }
+    
+  ],
+  6: [
+    { id: 1, name: "Kurunegala" },
+    { id: 2, name: "Puttalam" }
+    
+  ],
+  7: [
+    { id: 1, name: "Anuradhapura" },
+    { id: 2, name: "Polonnaruwa" }
+    
+  ],
+  8: [
+    { id: 1, name: "Badulla" },
+    { id: 2, name: "Monaragala" }
+    
+  ],
+  9: [
+    { id: 1, name: "Kegalle" },
+    { id: 2, name: "Ratnapura" }
+    
+  ]
+};
+
+// Populate provinces dropdown
+const provinceDropdown = document.getElementById('province');
+provincesData.forEach(province => {
+  const option = document.createElement('option');
+  option.value = province.id;
+  option.textContent = province.name;
+  provinceDropdown.appendChild(option);
+});
+
+// Populate districts dropdown based on selected province
+const districtDropdown = document.getElementById('district');
+provinceDropdown.addEventListener('change', (event) => {
+  const selectedProvinceId = event.target.value;
+  districtDropdown.innerHTML = ''; // Clear previous options
+
+  districtsData[selectedProvinceId].forEach(district => {
+    const option = document.createElement('option');
+    option.value = district.id;
+    option.textContent = district.name;
+    districtDropdown.appendChild(option);
+  });
+});
+
+// Add event listener to "Add Another Contact Person" button
+document.getElementById('add-contact').addEventListener('click', function() {
+  const contactPersonsContainer = document.getElementById('contact-persons');
+  const newContactPerson = document.createElement('div');
+  newContactPerson.classList.add('contact-person');
+  newContactPerson.innerHTML = `
+    <input type="text" name="contact-name[]" placeholder="Name">
+    <input type="tel" name="contact-number[]" placeholder="Mobile Number">
+  `;
+  contactPersonsContainer.appendChild(newContactPerson);
+});
+//phone number validation
+function validatePhoneNumber(input) {
+  const phoneNumber = input.value.trim();
+  const isValid = /^\d{0,10}$/.test(phoneNumber);
+  const errorElement = document.getElementById('phone-error');
+
+  if (!isValid) {
+    errorElement.textContent = 'Please enter only numbers and up to 10 digits.';
+    input.value = phoneNumber.slice(0, 10); // Truncate input to 10 digits
+  } else {
+    errorElement.textContent = '';
+  }
+}
+
+
+// Add event listener to "Add New Sponsor/Collaborator" button
+document.getElementById('add-sponsor').addEventListener('click', function() {
+  // Code to display popup for adding new sponsor
+});
+// Add event listener to "Add New Sponsor/Collaborator" button
+document.getElementById('add-sponsor').addEventListener('click', function() {
+  // Show the popup
+  document.getElementById('popup').style.display = 'block';
+});
+
+// Add event listener to the "Add Sponsor/Collaborator" button inside the popup
+document.getElementById('submit-sponsor').addEventListener('click', function() {
+  // Get the input values from the popup
+  const sponsorName = document.getElementById('sponsor-name').value;
+  const adminUser = document.getElementById('admin-user').value;
+  const adminPassword = document.getElementById('admin-password').value;
+  
+  // Add the new sponsor/collaborator to the dropdown or perform other actions
+  
+  // Hide the popup
+  document.getElementById('popup').style.display = 'none';
+});
+// Add event listener to the "Close" button
+document.getElementById('close-popup').addEventListener('click', function() {
+  document.getElementById('popup').style.display = 'none'; // Hide the popup
+});
+
+
+
+
+  </script>
+</body>
+</html>
